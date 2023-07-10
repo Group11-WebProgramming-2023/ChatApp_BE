@@ -183,6 +183,7 @@ io.on("connection", async (socket) => {
     // message => {to, from, type, created_at, text, file}
 
     const new_message = {
+      _id: new mongoose.Types.ObjectId(),
       to: to,
       from: from,
       type: type,

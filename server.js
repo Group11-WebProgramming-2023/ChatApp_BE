@@ -69,6 +69,8 @@ io.on("connection", async (socket) => {
 
   // We can write our socket event listeners in here...
   socket.on("friend_request", async (data) => {
+    console.log(`[SOCKET RECEIVE]: friend_request`);
+
     const to = await User.findById(data.to).select("socket_id");
     const from = await User.findById(data.from).select("socket_id");
 
@@ -87,6 +89,8 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("accept_request", async (data) => {
+    console.log(`[SOCKET RECEIVE]: accept_request`);
+
     // accept friend request => add ref of each other in friends array
     console.log(data);
     const request_doc = await FriendRequest.findById(data.request_id);
@@ -117,16 +121,27 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("get_direct_conversations", async ({ user_id }, callback) => {
-    const existing_conversations = await chatMessage
+    console.log(`[SOCKET RECEIVE]: get_direct_conversations`);
+    let existing_conversations = await chatMessage
       .find({
         participants: { $all: [user_id] },
       })
       .populate("participants", "firstName lastName avatar _id email status");
+
+    existing_conversations = existing_conversations.map((item) => {
+      return {
+        _id: item._id,
+        participants: item.participants,
+        messages: [item.messages[item.messages.length - 1]],
+      };
+    });
     console.log(existing_conversations);
     callback(existing_conversations);
   });
 
   socket.on("start_conversation", async (data) => {
+    console.log(`[SOCKET RECEIVE]: start_conversation`);
+
     const { to, from } = data;
 
     // check if there is any existing conversation
@@ -150,15 +165,19 @@ io.on("connection", async (socket) => {
 
       console.log(new_chat);
 
+      console.log(`[SOCKET EMIT]: start_chat`);
       socket.emit("start_chat", new_chat);
     }
     // if yes => just emit event "start_chat" & send conversation details as payload
     else {
+      console.log(`[SOCKET EMIT]: start_chat`);
       socket.emit("start_chat", existing_conversations[0]);
     }
   });
 
   socket.on("get_messages", async (data, callback) => {
+    console.log(`[SOCKET RECEIVE]: get_messages`);
+
     try {
       const { messages } = await chatMessage
         .findById(data.conversation_id)
@@ -171,6 +190,8 @@ io.on("connection", async (socket) => {
 
   // Handle incoming text/link messages
   socket.on("text_message", async (data) => {
+    console.log(`[SOCKET RECEIVE]: text_message`);
+
     console.log("Received message:", data);
 
     // data: {to, from, text}
@@ -213,6 +234,8 @@ io.on("connection", async (socket) => {
 
   // handle Media/Document Message
   socket.on("file_message", (data) => {
+    console.log(`[SOCKET RECEIVE]: file_message`);
+
     console.log("Received message:", data);
 
     // data: {to, from, text, file}
@@ -240,6 +263,8 @@ io.on("connection", async (socket) => {
 
   // handle start_audio_call event
   socket.on("start_audio_call", async (data) => {
+    console.log(`[SOCKET RECEIVE]: start_audio_call`);
+
     const { from, to, roomID } = data;
 
     const to_user = await User.findById(to);
@@ -257,6 +282,8 @@ io.on("connection", async (socket) => {
 
   // handle audio_call_not_picked
   socket.on("audio_call_not_picked", async (data) => {
+    console.log(`[SOCKET RECEIVE]: audio_call_not_picked`);
+
     console.log(data);
     // find and update call record
     const { to, from } = data;
@@ -279,6 +306,8 @@ io.on("connection", async (socket) => {
 
   // handle audio_call_accepted
   socket.on("audio_call_accepted", async (data) => {
+    console.log(`[SOCKET RECEIVE]: audio_call_accepted`);
+
     const { to, from } = data;
 
     const from_user = await User.findById(from);
@@ -300,6 +329,8 @@ io.on("connection", async (socket) => {
 
   // handle audio_call_denied
   socket.on("audio_call_denied", async (data) => {
+    console.log(`[SOCKET RECEIVE]: audio_call_denied`);
+
     // find and update call record
     const { to, from } = data;
 
@@ -321,6 +352,8 @@ io.on("connection", async (socket) => {
 
   // handle user_is_busy_audio_call
   socket.on("user_is_busy_audio_call", async (data) => {
+    console.log(`[SOCKET RECEIVE]: user_is_busy_audio_call`);
+
     const { to, from } = data;
     // find and update call record
     await AudioCall.findOneAndUpdate(
@@ -342,6 +375,8 @@ io.on("connection", async (socket) => {
 
   // handle start_video_call event
   socket.on("start_video_call", async (data) => {
+    console.log(`[SOCKET RECEIVE]: start_video_call`);
+
     const { from, to, roomID } = data;
 
     console.log(data);
@@ -363,6 +398,8 @@ io.on("connection", async (socket) => {
 
   // handle video_call_not_picked
   socket.on("video_call_not_picked", async (data) => {
+    console.log(`[SOCKET RECEIVE]: video_call_not_picked`);
+
     console.log(data);
     // find and update call record
     const { to, from } = data;
@@ -385,6 +422,8 @@ io.on("connection", async (socket) => {
 
   // handle video_call_accepted
   socket.on("video_call_accepted", async (data) => {
+    console.log(`[SOCKET RECEIVE]: video_call_accepted`);
+
     const { to, from } = data;
 
     const from_user = await User.findById(from);
@@ -406,6 +445,8 @@ io.on("connection", async (socket) => {
 
   // handle video_call_denied
   socket.on("video_call_denied", async (data) => {
+    console.log(`[SOCKET RECEIVE]: video_call_denied`);
+
     // find and update call record
     const { to, from } = data;
 
@@ -427,6 +468,8 @@ io.on("connection", async (socket) => {
 
   // handle user_is_busy_video_call
   socket.on("user_is_busy_video_call", async (data) => {
+    console.log(`[SOCKET RECEIVE]: user_is_busy_video_call`);
+
     const { to, from } = data;
     // find and update call record
     await VideoCall.findOneAndUpdate(
@@ -447,6 +490,8 @@ io.on("connection", async (socket) => {
   // -------------- HANDLE SOCKET DISCONNECTION ----------------- //
 
   socket.on("end", async (data) => {
+    console.log(`[SOCKET RECEIVE]: end`);
+
     // Find user by ID and set status as offline
 
     if (data.user_id) {

@@ -112,7 +112,7 @@ exports.generateZegoToken = catchAsync(async (req, res, next) => {
 
     const effectiveTimeInSeconds = 24 * 60 * 60; //type: number; unit: s; token expiration time, unit: second
     const payloadObject = {
-      room_id, // Please modify to the user's roomID
+      room_id,
       // The token generated allows loginRoom (login room) action
       // The token generated in this example allows publishStream (push stream) action
       privilege: {
@@ -123,17 +123,14 @@ exports.generateZegoToken = catchAsync(async (req, res, next) => {
     }; //
     const payload = JSON.stringify(payloadObject);
     // Build token
-    const token =
-      userId === "64a7abd375f8f7a44d322cdc"
-        ? "04AAAAAGSrmvAAEHBiaWlmaGMwMWhzNmZqZzQAwC+cITOd2Tcb3eJXg92uHOuZIK2Sf8UREtBLpt96WHunSRYNYQnzN/lQAaqIX5u5+tDKAmT9L7ezbOWNtXLcaga1HEZ7Z6+b2+SFRobV/Aj9lEF4AKmjfVYXG8r2SSOTdUmnx8Y3EBR+k/Qdmvm0FkFH8LN2su3tpizxOJ24HVq62Fvn6x4EmhaW0jl/yEhxz/xfe+bSVWyeQszxY8Vf0xpfS0w0bS1pKCaRF64TXYa/y13iy02op0N2bEKpetvGCw=="
-        : "04AAAAAGSro0QAEHV1cmw4OHpuaDF3bXhpOHAAwIItzfQ0+Wy/Ni/PU0XZ6Jr5QvNJjkfRT3HlOJz/cgvFq48fv9PdGlKZCj6iTGapICq0/Zz58pRpWZzzvzwQ/TZe/bSlocuK+erK42NX+PYpTtk9oJWumZ5cA1AaweeG6HiRzgeCXNnmjrWWQ8Z5QUTibNBLxNnB6npMHtJn6YDQvW5DhFNBDaXCk/5mJVmJLB3EF18QROZMcYAZJMgc+t909zfKxPLFLjyJdDSP2hjwR5n3iyqGJP2XLRaEw7AE4g==";
-    // generateToken04(
-    //   Number(appID), // APP ID NEEDS TO BE A NUMBER
-    //   userId,
-    //   serverSecret,
-    //   effectiveTimeInSeconds,
-    //   payload
-    // );
+    console.log(Number(appID));
+    const token = generateToken04(
+      Number(appID),
+      userId,
+      serverSecret,
+      effectiveTimeInSeconds,
+      payload
+    );
     console.log(token);
     res.status(200).json({
       status: "success",
@@ -150,7 +147,6 @@ exports.startAudioCall = catchAsync(async (req, res, next) => {
   const to = req.body.id;
 
   const from_user = await User.findById(from);
-  const to_user = await User.findById(to);
 
   // create a new call audioCall Doc and send required data to client
   const new_audio_call = await AudioCall.create({

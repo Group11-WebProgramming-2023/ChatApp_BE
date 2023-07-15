@@ -7,10 +7,8 @@ module.exports = (name, otp) => {
 <xml>
   <o:OfficeDocumentSettings>
     <o:AllowPNG/>
-    <o:PixelsPerInch>96</o:PixelsPerInch>
   </o:OfficeDocumentSettings>
 </xml>
-<![endif]-->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="x-apple-disable-message-reformatting">
@@ -99,7 +97,7 @@ module.exports = (name, otp) => {
 
 </head>
 
-<body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #f9f9f9;color: #000000">
+<body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: white;color: #000000">
   <table id="u_body" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #f9f9f9;width:100%" cellpadding="0" cellspacing="0">
     <tbody>
       <tr style="vertical-align: top">
@@ -140,7 +138,7 @@ module.exports = (name, otp) => {
 
 
 
-          <div class="u-row-container" style="padding: 0px;background-color: transparent">
+          <div class="u-row-container" style="padding: 0px;background-color: white">
             <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #e5eaf5;">
               <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                 <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
@@ -155,8 +153,7 @@ module.exports = (name, otp) => {
                               <div style="color: #ffffff; line-height: 140%; text-align: left; word-wrap: break-word;">
                                 <p style="font-size: 14px; line-height: 140%;"><span style="color: #000000; line-height: 19.6px;">Hello ${name},</span></p>
                                 <p style="font-size: 14px; line-height: 140%;"> </p>
-                                <p style="font-size: 14px; line-height: 140%;"><span style="color: #000000; line-height: 19.6px;">OTP for verification is ${otp}.</span><br /><br /><span style="color: #000000; line-height: 19.6px;">Note: This OTP is valid for next 10 mins.</span></p>
-                                <p style="font-size: 14px; line-height: 140%;"><br /><br /><span style="color: #000000; line-height: 19.6px;">Thanks &amp; Regards</span><br /><span style="color: #000000; line-height: 19.6px;">Team Task</span></p>
+                                <p style="font-size: 14px; line-height: 140%;"><span style="color: #000000; line-height: 19.6px;">OTP for verification is ${otp}.</span><br /><br /><span style="color: #000000; line-height: 19.6px;">This OTP will be valid for 10 minutes.</span></p>
                               </div>
 
                             </td>
@@ -173,7 +170,7 @@ module.exports = (name, otp) => {
 
 
 
-          <div class="u-row-container" style="padding: 0px;background-color: transparent">
+          <div class="u-row-container" style="padding: 0px;background-color: white">
             <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
               <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
                 <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">

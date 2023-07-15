@@ -1,30 +1,29 @@
-const sgMail = require("@sendgrid/mail");
+var nodemailer = require("nodemailer"); // khai báo sử dụng module nodemailer
 
-sgMail.setApiKey(process.env.SG_KEY);
+exports.sendEmail = async ({ to, sender, subject, html, text }) => {
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: "kv242821@gmail.com",
+      pass: "haoqelczejlzpdkm",
+    },
+  });
+  var mailOptions = {
+    from: "Chat Application",
+    to: to,
+    subject: subject,
+    text: text,
+    html: html,
+  };
 
-const sendSGMail = async ({ to, sender, subject, html, attachments, text }) => {
-  try {
-    const from = "kv242821@gmail.com";
-
-    const msg = {
-      from: from, // Change to your verified sender
-      to: to, // Change to your recipient
-      subject: subject,
-      html: html,
-      // text: text,
-      attachments,
-    };
-
-    return sgMail.send(msg);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-exports.sendEmail = async (args) => {
-  if (!process.env.NODE_ENV === "development") {
-    return Promise.resolve();
-  } else {
-    return sendSGMail(args);
-  }
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
 };

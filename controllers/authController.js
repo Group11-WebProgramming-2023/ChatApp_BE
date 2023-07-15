@@ -72,15 +72,16 @@ exports.sendOTP = catchAsync(async (req, res, next) => {
   });
   user.otp = new_otp.toString();
   await user.save({ new: true, validateModifiedOnly: true });
-  console.log(new_otp);
-  // TODO send mail
-  // mailService.sendEmail({
-  //   from: "kv242821@gmail.com",
-  //   to: user.email,
-  //   subject: "Verification OTP",
-  //   html: otp(user.firstName, new_otp),
-  //   attachments: [],
-  // });
+
+  console.log(`[OTP]: ${new_otp}`);
+
+  mailService.sendEmail({
+    sender: "kv242821@gmail.com",
+    to: user.email,
+    subject: "Verification OTP",
+    html: otp(user.firstName, new_otp),
+  });
+
   res.status(200).json({
     status: "success",
     message: "OTP Sent Successfully!",
@@ -238,21 +239,19 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 3) Send it to user's email
   try {
     const resetURL = `http://localhost:3000/auth/new-password?token=${resetToken}`;
-    // TODO => Send Email with this Reset URL to user's email address
 
-    console.log(resetURL);
+    console.log(`[RESET URL]: ${resetURL}`);
 
     mailService.sendEmail({
-      from: "kv242821@gmail.com",
+      sender: "kv242821@gmail.com",
       to: user.email,
       subject: "Reset Password",
       html: resetPassword(user.firstName, resetURL),
-      attachments: [],
     });
 
     res.status(200).json({
       status: "success",
-      message: "Token sent to email!",
+      message: "Reset password URL has been sent to email!",
     });
   } catch (err) {
     user.passwordResetToken = undefined;

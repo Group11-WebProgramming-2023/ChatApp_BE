@@ -90,7 +90,7 @@ module.exports = (name, link) => {
   
   </head>
   
-  <body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #f9f9f9;color: #000000">
+  <body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: white;color: #000000">
     <table id="u_body" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #f9f9f9;width:100%" cellpadding="0" cellspacing="0">
       <tbody>
         <tr style="vertical-align: top">
@@ -147,8 +147,7 @@ module.exports = (name, link) => {
                                 <div style="color: #ffffff; line-height: 140%; text-align: left; word-wrap: break-word;">
                                   <p style="font-size: 14px; line-height: 140%;"><span style="color: #000000; line-height: 19.6px;">Hello ${name},</span></p>
                                   <p style="font-size: 14px; line-height: 140%;"> </p>
-                                  <p style="font-size: 14px; line-height: 140%;"><span style="color: #000000; line-height: 19.6px;">Please click on the given button to reset your password</span><br /><br /><span style="color: #000000; line-height: 19.6px;">Note: This link is valid for only 10 mins.</span></p>
-                                  <p style="font-size: 14px; line-height: 140%;"><br /><br /><span style="color: #000000; line-height: 19.6px;">Thanks &amp; Regards</span><br /><span style="color: #000000; line-height: 19.6px;">Team Task</span></p>
+                                  <p style="font-size: 14px; line-height: 140%;"><span style="color: #000000; line-height: 19.6px;">Click on the below button to reset your password</span><br /><br /><span style="color: #000000; line-height: 19.6px;">This link will be valid for 10 minutes.</span></p>
                                 </div>
   
                               </td>
@@ -194,7 +193,7 @@ module.exports = (name, link) => {
               </div>
             </div>
   
-            <div class="u-row-container" style="padding: 0px;background-color: transparent">
+            <div class="u-row-container" style="padding: 0px;background-color: white">
               <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
                 <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
   

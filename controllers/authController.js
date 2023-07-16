@@ -139,7 +139,7 @@ exports.verifyOTP = catchAsync(async (req, res, next) => {
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
-  // console.log(email, password);
+  console.log(email, password);
 
   if (!email || !password) {
     res.status(400).json({

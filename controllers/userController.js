@@ -217,7 +217,8 @@ exports.getCallLogs = catchAsync(async (req, res, next) => {
       call_logs.push({
         id: elm._id,
         img: other_user.avatar,
-        name: other_user.firstName,
+        firstName: other_user.firstName,
+        lastName: other_user.lastName,
         online: true,
         incoming: false,
         missed,
@@ -230,7 +231,8 @@ exports.getCallLogs = catchAsync(async (req, res, next) => {
       call_logs.push({
         id: elm._id,
         img: other_user.avatar,
-        name: other_user.firstName,
+        firstName: other_user.firstName,
+        lastName: other_user.lastName,
         online: true,
         incoming: false,
         missed,
@@ -247,7 +249,8 @@ exports.getCallLogs = catchAsync(async (req, res, next) => {
       call_logs.push({
         id: element._id,
         img: other_user.avatar,
-        name: other_user.firstName,
+        firstName: other_user.firstName,
+        lastName: other_user.lastName,
         online: true,
         incoming: false,
         missed,
@@ -260,7 +263,8 @@ exports.getCallLogs = catchAsync(async (req, res, next) => {
       call_logs.push({
         id: element._id,
         img: other_user.avatar,
-        name: other_user.firstName,
+        firstName: other_user.firstName,
+        lastName: other_user.lastName,
         online: true,
         incoming: false,
         missed,

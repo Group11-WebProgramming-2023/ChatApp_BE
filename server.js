@@ -350,6 +350,27 @@ io.on("connection", async (socket) => {
     });
   });
 
+  // handle audio_call_ended
+  socket.on("audio_call_ended", async (data) => {
+    console.log(`[SOCKET RECEIVE]: audio_call_ended`);
+
+    // find and update call record
+    const { to, from } = data;
+
+    await AudioCall.findOneAndUpdate(
+      {
+        participants: { $size: 2, $all: [to, from] },
+        verdict: "Accepted",
+      },
+      { status: "Ended", endedAt: Date.now() }
+    );
+
+    const from_user = await User.findById(from);
+    // TODO => emit call_denied to sender of call
+
+    io.to(from_user?.socket_id).emit("audio_call_ended");
+  });
+
   // handle user_is_busy_audio_call
   socket.on("user_is_busy_audio_call", async (data) => {
     console.log(`[SOCKET RECEIVE]: user_is_busy_audio_call`);

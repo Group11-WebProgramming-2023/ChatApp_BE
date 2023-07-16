@@ -7,12 +7,7 @@ const filterObj = require("../utils/filterObj");
 
 const { generateToken04 } = require("./zegoServerAssistant");
 
-// Please change appID to your appId, appid is a number
-// Example: 1234567890
 const appID = process.env.ZEGO_APP_ID; // type: number
-
-// Please change serverSecret to your serverSecret, serverSecret is string
-// Example：'sdfsdfsd323sdfsdf'
 const serverSecret = process.env.ZEGO_SERVER_SECRET; // type: 32 byte length string
 
 exports.getMe = catchAsync(async (req, res, next) => {

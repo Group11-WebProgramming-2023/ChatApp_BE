@@ -10,14 +10,14 @@ const { generateToken04 } = require("./zegoServerAssistant");
 const appID = process.env.ZEGO_APP_ID; // type: number
 const serverSecret = process.env.ZEGO_SERVER_SECRET; // type: 32 byte length string
 
-exports.getMe = catchAsync(async (req, res, next) => {
+exports.profile = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     data: req.user,
   });
 });
 
-exports.updateMe = catchAsync(async (req, res, next) => {
+exports.updateProfile = catchAsync(async (req, res, next) => {
   const filteredBody = filterObj(
     req.body,
     "firstName",
@@ -211,11 +211,11 @@ exports.getCallLogs = catchAsync(async (req, res, next) => {
       // outgoing
       call_logs.push({
         id: elm._id,
+        type: "audio",
+        isCaller: true,
         img: other_user.avatar,
         firstName: other_user.firstName,
         lastName: other_user.lastName,
-        online: true,
-        incoming: false,
         missed,
       });
     } else {
@@ -225,11 +225,11 @@ exports.getCallLogs = catchAsync(async (req, res, next) => {
       // outgoing
       call_logs.push({
         id: elm._id,
+        type: "audio",
+        isCaller: false,
         img: other_user.avatar,
         firstName: other_user.firstName,
         lastName: other_user.lastName,
-        online: true,
-        incoming: false,
         missed,
       });
     }
@@ -243,11 +243,11 @@ exports.getCallLogs = catchAsync(async (req, res, next) => {
       // outgoing
       call_logs.push({
         id: element._id,
+        type: "video",
+        isCaller: true,
         img: other_user.avatar,
         firstName: other_user.firstName,
         lastName: other_user.lastName,
-        online: true,
-        incoming: false,
         missed,
       });
     } else {
@@ -257,11 +257,11 @@ exports.getCallLogs = catchAsync(async (req, res, next) => {
       // outgoing
       call_logs.push({
         id: element._id,
+        type: "video",
+        isCaller: false,
         img: other_user.avatar,
         firstName: other_user.firstName,
         lastName: other_user.lastName,
-        online: true,
-        incoming: false,
         missed,
       });
     }

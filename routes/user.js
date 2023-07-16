@@ -13,8 +13,12 @@ router.get(
   authController.protect,
   userController.getCallLogs
 );
-router.get("/get-me", authController.protect, userController.getMe);
-router.patch("/update-me", authController.protect, userController.updateMe);
+router.get("/profile", authController.protect, userController.profile);
+router.patch(
+  "/update-profile",
+  authController.protect,
+  userController.updateProfile
+);
 router.get(
   "/all-verified-users",
   authController.protect,

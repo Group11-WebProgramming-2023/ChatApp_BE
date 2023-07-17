@@ -18,13 +18,7 @@ exports.profile = catchAsync(async (req, res, next) => {
 });
 
 exports.updateProfile = catchAsync(async (req, res, next) => {
-  const filteredBody = filterObj(
-    req.body,
-    "firstName",
-    "lastName",
-    "about",
-    "avatar"
-  );
+  const filteredBody = filterObj(req.body, "firstName", "lastName", "avatar");
 
   const userDoc = await User.findByIdAndUpdate(req.user._id, filteredBody);
 
@@ -103,9 +97,7 @@ exports.generateZegoToken = catchAsync(async (req, res, next) => {
   try {
     const { userId, room_id } = req.body;
 
-    console.log(userId, room_id, "from generate zego token");
-
-    const effectiveTimeInSeconds = 24 * 60 * 60; //type: number; unit: s; token expiration time, unit: second
+    const effectiveTimeInSeconds = 60 * 60; //type: number; unit: s; token expiration time, unit: second
     const payloadObject = {
       room_id,
       // The token generated allows loginRoom (login room) action
@@ -118,7 +110,6 @@ exports.generateZegoToken = catchAsync(async (req, res, next) => {
     }; //
     const payload = JSON.stringify(payloadObject);
     // Build token
-    console.log(Number(appID));
     const token = generateToken04(
       Number(appID),
       userId,
@@ -126,7 +117,7 @@ exports.generateZegoToken = catchAsync(async (req, res, next) => {
       effectiveTimeInSeconds,
       payload
     );
-    console.log(token);
+
     res.status(200).json({
       status: "success",
       message: "Token generated successfully",
@@ -191,7 +182,7 @@ exports.startVideoCall = catchAsync(async (req, res, next) => {
 exports.getCallLogs = catchAsync(async (req, res, next) => {
   const user_id = req.user._id;
 
-  const call_logs = [];
+  let call_logs = [];
 
   const audio_calls = await AudioCall.find({
     participants: { $all: [user_id] },
@@ -200,8 +191,6 @@ exports.getCallLogs = catchAsync(async (req, res, next) => {
   const video_calls = await VideoCall.find({
     participants: { $all: [user_id] },
   }).populate("from to");
-
-  console.log(audio_calls, video_calls);
 
   for (let elm of audio_calls) {
     const missed = elm.verdict !== "Accepted";
@@ -217,6 +206,7 @@ exports.getCallLogs = catchAsync(async (req, res, next) => {
         firstName: other_user.firstName,
         lastName: other_user.lastName,
         missed,
+        time: elm.endedAt,
       });
     } else {
       // incoming
@@ -231,6 +221,7 @@ exports.getCallLogs = catchAsync(async (req, res, next) => {
         firstName: other_user.firstName,
         lastName: other_user.lastName,
         missed,
+        time: elm.endedAt,
       });
     }
   }
@@ -249,6 +240,7 @@ exports.getCallLogs = catchAsync(async (req, res, next) => {
         firstName: other_user.firstName,
         lastName: other_user.lastName,
         missed,
+        time: element.endedAt,
       });
     } else {
       // incoming
@@ -263,9 +255,14 @@ exports.getCallLogs = catchAsync(async (req, res, next) => {
         firstName: other_user.firstName,
         lastName: other_user.lastName,
         missed,
+        time: element.endedAt,
       });
     }
   }
+
+  call_logs.sort(function (a, b) {
+    return b.time - a.time;
+  });
 
   res.status(200).json({
     status: "success",

@@ -96,9 +96,9 @@ module.exports = (name, link) => {
         <tr style="vertical-align: top">
           <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
   
-            <div class="u-row-container" style="padding: 0px;background-color: transparent">
+            <div class="u-row-container" style="padding: 0px;background-color: white">
               <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ffffff;">
-                <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
+                <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: white;">
                   <div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
                     <div style="height: 100%;width: 100% !important;">
                       <div style="box-sizing: border-box; height: 100%; padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;">
@@ -131,7 +131,7 @@ module.exports = (name, link) => {
               </div>
             </div>
   
-            <div class="u-row-container" style="padding: 0px;background-color: transparent">
+            <div class="u-row-container" style="padding: 0px;background-color: white">
               <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #e5eaf5;">
                 <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
   
@@ -162,7 +162,7 @@ module.exports = (name, link) => {
               </div>
             </div>
   
-            <div class="u-row-container" style="padding: 0px;background-color: transparent">
+            <div class="u-row-container" style="padding: 0px;background-color: white">
               <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #e5eaf5;">
                 <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
   

@@ -92,9 +92,7 @@ function generateToken04(
     payload: payload || "",
   };
   var plaintText = JSON.stringify(tokenInfo); // Convert tokenInfo object to JSON string
-  console.log("plain text: ", plaintText);
   var iv = makeRandomIv(); // Generate random 16 character string for iv
-  console.log("iv", iv);
   var encryptBuf = aesEncrypt(plaintText, secret, iv); // Encrypt JSON string using AES encryption function
   var _a = [new Uint8Array(8), new Uint8Array(2), new Uint8Array(2)],
     b1 = _a[0],

@@ -15,7 +15,6 @@ const http = require("http");
 const server = http.createServer(app);
 
 const { Server } = require("socket.io"); // Add this
-const { promisify } = require("util");
 const User = require("./models/user");
 const FriendRequest = require("./models/friendRequest");
 const chatMessage = require("./models/chatMessage");
@@ -52,7 +51,6 @@ server.listen(port, () => {
 // Add this
 // Listen for when the client connects via socket.io-client
 io.on("connection", async (socket) => {
-  console.log(JSON.stringify(socket.handshake.query));
   const user_id = socket.handshake.query.user_id;
   console.log(`User ${user_id} connected; SocketId ${socket.id}`);
 
@@ -308,17 +306,11 @@ io.on("connection", async (socket) => {
   socket.on("audio_call_accepted", async (data) => {
     console.log(`[SOCKET RECEIVE]: audio_call_accepted`);
 
-    const { to, from } = data;
-
+    const { to, from, roomID } = data;
     const from_user = await User.findById(from);
 
     // find and update call record
-    await AudioCall.findOneAndUpdate(
-      {
-        participants: { $size: 2, $all: [to, from] },
-      },
-      { verdict: "Accepted" }
-    );
+    await AudioCall.findByIdAndUpdate(roomID, { verdict: "Accepted" });
 
     // TODO => emit call_accepted to sender of call
     io.to(from_user?.socket_id).emit("audio_call_accepted", {
@@ -445,17 +437,11 @@ io.on("connection", async (socket) => {
   socket.on("video_call_accepted", async (data) => {
     console.log(`[SOCKET RECEIVE]: video_call_accepted`);
 
-    const { to, from } = data;
-
+    const { to, from, roomID } = data;
     const from_user = await User.findById(from);
 
     // find and update call record
-    await VideoCall.findOneAndUpdate(
-      {
-        participants: { $size: 2, $all: [to, from] },
-      },
-      { verdict: "Accepted" }
-    );
+    await VideoCall.findByIdAndUpdate(roomID, { verdict: "Accepted" });
 
     // TODO => emit call_accepted to sender of call
     io.to(from_user?.socket_id).emit("video_call_accepted", {

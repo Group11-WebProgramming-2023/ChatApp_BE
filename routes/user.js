@@ -14,7 +14,7 @@ router.get(
   userController.getCallLogs
 );
 router.get("/profile", authController.protect, userController.profile);
-router.patch(
+router.post(
   "/update-profile",
   authController.protect,
   userController.updateProfile
